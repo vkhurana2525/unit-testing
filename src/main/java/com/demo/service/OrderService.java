@@ -22,11 +22,14 @@ public class OrderService {
         double priceWithTax = order.getPrice() * 20 / 100;
         order.setPriceWithTax(priceWithTax);
         emailService.sendEmail(order);
+        order.setCustomerNotified(true);
     }
 
     boolean placeOrder(Order order, String cc) {
         double priceWithTax = order.getPrice() * 20 / 100;
         order.setPriceWithTax(priceWithTax);
-        return emailService.sendEmail(order, cc);
+        boolean isNotified = emailService.sendEmail(order, cc);
+        order.setCustomerNotified(isNotified);
+        return isNotified;
     }
 }
